@@ -11,7 +11,7 @@ loadCSV:{[file; sym]
  }
 
 // Example usage
-stock_list: `AAPL`MSFT
+stock_list: `AAPL`MSFT`AMZN`GOOGL`META
 {
     file_path: raze string x, ".csv";
     file: `$file_path;
@@ -19,5 +19,4 @@ stock_list: `AAPL`MSFT
     loadCSV[file; x]
  } each stock_list
 
-// Save the table to disk for persistence
-/ save `stockData
+save `stockData
