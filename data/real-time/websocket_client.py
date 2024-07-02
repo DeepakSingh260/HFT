@@ -4,6 +4,7 @@ import qpython.qconnection as qconn
 import time
 import sys
 import logging
+import datetime
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
@@ -12,7 +13,7 @@ logger = logging.getLogger()
 # Authentication token for Polygon.io (replace with your actual token)
 api_key= 'api_key'
 dataset = 'sip_non_pro'
-tickers = ['AAPL']
+tickers = ['AAPL','GOOGL','MSFT','AMZN','META']
 
 
 def on_message(ws, message):
@@ -23,11 +24,11 @@ def on_message(ws, message):
         if isinstance(data, list) and 'ev' in data[0] and data[0]['ev'] == 'status':
             logger.info(f"Received status message: {data}")
             return
-
+        logger.debug(f"all data: {data}")
         # Assuming data contains time, symbol, price, and volume
         if isinstance(data, dict):
             q_data = {
-                'time': data.get('t'),
+                'time': int(data.get('t')),
                 'sym': data.get('s'),
                 'high': data.get('h'),
                 'low': data.get('l'),
@@ -55,7 +56,7 @@ def subscribe(wsapp, dataset, tickers):
         'dataset': dataset,
         'tickers': tickers,
         'channel': 'bars',
-        'frequency': '1s',
+        'frequency': '10s',
         'aggregation': '1m'
     }
     wsapp.send(json.dumps(sub_request))
