@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
 logger = logging.getLogger()
 
 # Authentication token for Polygon.io (replace with your actual token)
-api_key= 'api_key'
+api_key= ''
 dataset = 'sip_non_pro'
 tickers = ['AAPL','GOOGL','MSFT','AMZN','META']
 
@@ -28,7 +28,7 @@ def on_message(ws, message):
         # Assuming data contains time, symbol, price, and volume
         if isinstance(data, dict):
             q_data = {
-                'time': int(data.get('t')),
+                'time': data.get('t') ,
                 'sym': data.get('s'),
                 'high': data.get('h'),
                 'low': data.get('l'),
